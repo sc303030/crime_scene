@@ -9,9 +9,73 @@
     {% bootstrap_css %}
     <style>
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #1a1a1a;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    transparent,
+                    transparent 10px,
+                    rgba(0, 0, 0, .1) 10px,
+                    rgba(0, 0, 0, .1) 20px);
             min-height: 100vh;
             font-family: 'Noto Sans KR', sans-serif;
+            position: relative;
+        }
+
+        /* 크라임 테이프 효과 */
+        body::before {
+            content: 'CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️';
+            position: fixed;
+            top: 30px;
+            left: -50%;
+            right: -50%;
+            background: #ffeb3b;
+            color: #000000;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            transform: rotate(-3deg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-top: 3px solid #000000;
+            border-bottom: 3px solid #000000;
+            z-index: 1000;
+            white-space: nowrap;
+            animation: tape-flicker 3s infinite;
+        }
+
+        body::after {
+            content: 'CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️ CRIME SCENE ⚠️ DO NOT CROSS ⚠️';
+            position: fixed;
+            bottom: 30px;
+            left: -50%;
+            right: -50%;
+            background: #ffeb3b;
+            color: #000000;
+            text-align: center;
+            padding: 15px 0;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 3px;
+            transform: rotate(2deg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-top: 3px solid #000000;
+            border-bottom: 3px solid #000000;
+            z-index: 1000;
+            white-space: nowrap;
+            animation: tape-flicker 4s infinite;
+        }
+
+        @keyframes tape-flicker {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.95;
+            }
         }
 
         .main-container {
@@ -20,70 +84,150 @@
             align-items: center;
             justify-content: center;
             padding: 15px;
+            padding-top: 100px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 1;
         }
 
         .card {
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-            border: none;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8),
+                0 0 20px rgba(255, 0, 0, 0.3);
+            border: 2px solid #333;
             max-width: 800px;
             width: 100%;
+            background: #2a2a2a;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(139, 0, 0, 0.1) 0%, transparent 50%);
+            border-radius: 20px;
+            pointer-events: none;
         }
 
         .card-body {
             padding: 2rem;
+            position: relative;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 18px;
+            margin: 3px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
+            background: linear-gradient(135deg, #c62828 0%, #8b0000 100%);
+            border: 2px solid #000;
             border-radius: 25px;
             padding: 12px 35px;
             font-weight: bold;
-            transition: transform 0.2s;
+            transition: all 0.3s;
             font-size: 1rem;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(198, 40, 40, 0.4);
         }
 
         .btn-primary:hover {
             transform: scale(1.05);
+            background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+            box-shadow: 0 6px 20px rgba(198, 40, 40, 0.6);
         }
 
         .btn-outline-secondary {
             border-radius: 25px;
             padding: 12px 35px;
             font-weight: bold;
-            transition: transform 0.2s;
+            transition: all 0.3s;
+            border: 2px solid #666;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .btn-outline-secondary:hover {
+            background: #666;
+            color: #fff;
+            border-color: #000;
         }
 
         .progress {
             height: 25px;
             border-radius: 15px;
-            background-color: #e9ecef;
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
         }
 
         .progress-bar {
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: repeating-linear-gradient(45deg,
+                    #c62828,
+                    #c62828 10px,
+                    #8b0000 10px,
+                    #8b0000 20px);
             border-radius: 15px;
             font-weight: bold;
             font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(198, 40, 40, 0.5);
+            animation: progress-pulse 2s infinite;
+        }
+
+        @keyframes progress-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
         }
 
         .answer-btn {
-            border: 2px solid #dee2e6;
+            border: 2px solid #444;
             border-radius: 15px;
             padding: 18px;
             margin: 10px 0;
             text-align: left;
             transition: all 0.3s;
-            background: white;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
             cursor: pointer;
             width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .answer-btn::before {
+            content: '🔍';
+            position: absolute;
+            right: 20px;
+            opacity: 0;
+            transition: all 0.3s;
+            font-size: 1.2rem;
         }
 
         .answer-btn:hover {
-            border-color: #667eea;
-            background: #f8f9ff;
+            border-color: #c62828;
+            background: linear-gradient(135deg, #ffe0e0 0%, #ffd0d0 100%);
             transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(198, 40, 40, 0.3);
+        }
+
+        .answer-btn:hover::before {
+            opacity: 1;
+            right: 15px;
         }
 
         .character-result {
@@ -103,23 +247,39 @@
         }
 
         .traits-list li {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
             margin: 10px 0;
             padding: 15px 20px;
             border-radius: 10px;
-            border-left: 4px solid #667eea;
+            border-left: 5px solid #c62828;
             font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .traits-list li::before {
+            content: '🔴';
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+
+        .traits-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(198, 40, 40, 0.2);
         }
 
         h1,
         h2,
         h3 {
-            color: #2d3748;
+            color: #1a1a1a;
             font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             font-size: 2rem;
+            color: #8b0000;
         }
 
         h2 {
@@ -132,6 +292,11 @@
 
         h4 {
             font-size: 1.2rem;
+            color: #c62828;
+        }
+
+        .text-muted {
+            color: #666 !important;
         }
 
         .emoji-placeholder {
@@ -140,8 +305,26 @@
 
         /* 모바일 (작은 화면) */
         @media (max-width: 576px) {
+
+            body::before,
+            body::after {
+                font-size: 0.7rem;
+                padding: 10px 0;
+                letter-spacing: 2px;
+            }
+
+            body::before {
+                top: 15px;
+            }
+
+            body::after {
+                bottom: 15px;
+            }
+
             .main-container {
                 padding: 10px;
+                padding-top: 70px;
+                padding-bottom: 70px;
             }
 
             .card-body {
@@ -253,6 +436,13 @@
 
         /* 아주 작은 화면 추가 최적화 */
         @media (max-width: 380px) {
+
+            body::before,
+            body::after {
+                font-size: 0.6rem;
+                padding: 8px 0;
+            }
+
             h1 {
                 font-size: 1.3rem;
             }
