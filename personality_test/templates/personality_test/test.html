@@ -1,0 +1,59 @@
+{% extends 'personality_test/base.html' %}
+
+{% block title %}크라임씬 성격 테스트 - 질문 {{ current_index|add:1 }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <!-- 진행률 표시 -->
+        <div class="mb-4">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="text-muted">질문 {{ current_index|add:1 }} / {{ total_questions }}</span>
+                <span class="text-muted">{{ progress }}%</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ progress }}%"
+                    aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+        </div>
+
+        <!-- 질문 -->
+        <h3 class="mb-4">{{ question.text }}</h3>
+
+        <!-- 답변 선택지 -->
+        <form method="post" action="{% url 'personality_test:submit_answer' %}">
+            {% csrf_token %}
+            <input type="hidden" name="question_id" value="{{ question.id }}">
+            <input type="hidden" name="current_index" value="{{ current_index }}">
+
+            <div class="answers">
+                {% for answer in question.answers.all %}
+                <label class="answer-btn d-block">
+                    <input type="radio" name="answer_id" value="{{ answer.id }}" class="d-none" required
+                        onchange="this.form.submit()">
+                    <div class="d-flex align-items-center">
+                        <span class="me-3 h5 mb-0">{{ forloop.counter }}.</span>
+                        <span>{{ answer.text }}</span>
+                    </div>
+                </label>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // 답변 선택 시 시각적 피드백
+    document.querySelectorAll('.answer-btn input[type="radio"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            document.querySelectorAll('.answer-btn').forEach(function (btn) {
+                btn.style.borderColor = '#dee2e6';
+                btn.style.background = 'white';
+            });
+            this.closest('.answer-btn').style.borderColor = '#667eea';
+            this.closest('.answer-btn').style.background = '#f8f9ff';
+        });
+    });
+</script>
+{% endblock %}

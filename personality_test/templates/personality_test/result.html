@@ -1,0 +1,52 @@
+{% extends 'personality_test/base.html' %}
+
+{% block title %}크라임씬 성격 테스트 - 결과{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <div class="character-result">
+            <h1 class="mb-4">🎉 테스트 완료!</h1>
+
+            <h2 class="mb-3">당신은 <span style="color: #667eea;">{{ character.name }}</span> 타입입니다!</h2>
+
+            {% if character.image %}
+            <img src="{{ character.image.url }}" alt="{{ character.name }}" class="img-fluid">
+            {% else %}
+            <div class="mb-4 p-4 bg-light rounded">
+                <div class="emoji-placeholder">🎭</div>
+            </div>
+            {% endif %}
+
+            <div class="mt-4 text-start">
+                <h4 class="mb-3">📋 성격 설명</h4>
+                <p class="lead">{{ character.description }}</p>
+
+                {% if traits %}
+                <h4 class="mb-3 mt-4">✨ 주요 특징</h4>
+                <ul class="traits-list">
+                    {% for trait in traits %}
+                    <li>{{ trait }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="mt-5 d-flex flex-column flex-md-row gap-2 justify-content-center">
+                <a href="{% url 'personality_test:restart' %}" class="btn btn-primary btn-lg">
+                    다시 테스트하기
+                </a>
+                <a href="{% url 'personality_test:home' %}" class="btn btn-outline-secondary btn-lg">
+                    처음으로
+                </a>
+            </div>
+
+            <div class="mt-4">
+                <p class="text-muted">
+                    결과가 마음에 드시나요? 친구들과 공유해보세요! 🔗
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

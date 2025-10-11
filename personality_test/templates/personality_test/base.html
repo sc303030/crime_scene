@@ -1,0 +1,301 @@
+{% load django_bootstrap5 %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}크라임씬 성격 테스트{% endblock %}</title>
+    {% bootstrap_css %}
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: none;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 35px;
+            font-weight: bold;
+            transition: transform 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-outline-secondary {
+            border-radius: 25px;
+            padding: 12px 35px;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .progress {
+            height: 25px;
+            border-radius: 15px;
+            background-color: #e9ecef;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .answer-btn {
+            border: 2px solid #dee2e6;
+            border-radius: 15px;
+            padding: 18px;
+            margin: 10px 0;
+            text-align: left;
+            transition: all 0.3s;
+            background: white;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+            transform: translateX(5px);
+        }
+
+        .character-result {
+            text-align: center;
+        }
+
+        .character-result img {
+            max-width: 400px;
+            width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .traits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .traits-list li {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-size: 1rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2d3748;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+        }
+
+        h4 {
+            font-size: 1.2rem;
+        }
+
+        .emoji-placeholder {
+            font-size: 5rem;
+        }
+
+        /* 모바일 (작은 화면) */
+        @media (max-width: 576px) {
+            .main-container {
+                padding: 10px;
+            }
+
+            .card-body {
+                padding: 1.5rem !important;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            h3 {
+                font-size: 1.1rem;
+            }
+
+            h4 {
+                font-size: 1rem;
+            }
+
+            .lead {
+                font-size: 1rem;
+            }
+
+            .emoji-placeholder {
+                font-size: 3rem;
+            }
+
+            .btn-primary,
+            .btn-outline-secondary {
+                padding: 10px 25px;
+                font-size: 0.9rem;
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .progress {
+                height: 20px;
+            }
+
+            .progress-bar {
+                font-size: 0.75rem;
+            }
+
+            .answer-btn {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .answer-btn .h5 {
+                font-size: 1rem;
+            }
+
+            .answer-btn span {
+                font-size: 0.9rem;
+            }
+
+            .traits-list li {
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+
+            .character-result img {
+                margin: 15px 0;
+            }
+        }
+
+        /* 태블릿 (중간 화면) */
+        @media (min-width: 577px) and (max-width: 768px) {
+            .card-body {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .btn-primary,
+            .btn-outline-secondary {
+                padding: 11px 30px;
+                font-size: 0.95rem;
+            }
+
+            .answer-btn {
+                padding: 16px;
+            }
+        }
+
+        /* 큰 화면 (데스크톱) */
+        @media (min-width: 769px) {
+            .card-body {
+                padding: 2.5rem;
+            }
+
+            .answer-btn:hover {
+                transform: translateX(8px);
+            }
+        }
+
+        /* 아주 작은 화면 추가 최적화 */
+        @media (max-width: 380px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            h3 {
+                font-size: 1rem;
+            }
+
+            h4 {
+                font-size: 0.95rem;
+            }
+
+            .emoji-placeholder {
+                font-size: 2.5rem;
+            }
+
+            .card-body {
+                padding: 1rem !important;
+            }
+
+            .answer-btn {
+                padding: 12px;
+            }
+
+            .btn-primary,
+            .btn-outline-secondary {
+                padding: 8px 20px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container">
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% bootstrap_javascript %}
+</body>
+
+</html>
