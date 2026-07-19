@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#eee7d8">
+    <meta http-equiv="Cache-Control" content="no-store">
+    <title>크라임씬 인물 매칭 테스트</title>
+    <link rel="stylesheet" href="static/app.css?v=20260719-static1">
+</head>
+
+<body class="test-page">
+    <main class="main-container">
+        <section id="quiz-app" class="case-board test-screen" aria-live="polite">
+            <header class="case-topbar">
+                <div>
+                    <p class="case-kicker">PROFILE DOSSIER</p>
+                    <h1>성향 감식 기록</h1>
+                </div>
+                <a class="ghost-link" href="index.html">사건 목록</a>
+            </header>
+
+            <div id="quiz-view" class="quiz-view interrogation-layout">
+                <aside class="case-sidebar" aria-label="수사 진행 정보">
+                    <div class="case-id">
+                        <span>FILE</span>
+                        <strong>CS-MBTI</strong>
+                    </div>
+                    <dl class="case-meta">
+                        <div>
+                            <dt>기록</dt>
+                            <dd id="question-count">1 / 28</dd>
+                        </div>
+                        <div>
+                            <dt>감식률</dt>
+                            <dd id="progress-label">0%</dd>
+                        </div>
+                        <div>
+                            <dt>증거</dt>
+                            <dd>5개 마커</dd>
+                        </div>
+                    </dl>
+                    <p class="case-note">각 진술에 가장 가까운 증거 마커를 선택하면 다음 기록으로 넘어갑니다.</p>
+                </aside>
+
+                <section class="statement-panel">
+                    <div class="progress-track" aria-hidden="true">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+
+                    <article class="question-section">
+                        <p id="axis-label" class="axis-label">판단 성향</p>
+                        <div class="statement-paper">
+                            <span class="statement-stamp">진술 기록</span>
+                            <h2 id="question-text"></h2>
+                        </div>
+
+                        <div class="evidence-scale">
+                            <div class="likert-labels" aria-hidden="true">
+                                <span>채택</span>
+                                <span>보류</span>
+                                <span>배제</span>
+                            </div>
+                            <div id="answer-scale" class="answer-scale" role="group" aria-label="답변 선택"></div>
+                        </div>
+                    </article>
+
+                    <div class="quiz-actions">
+                        <button id="prev-button" class="secondary-action" type="button">이전 기록</button>
+                        <button id="next-button" class="primary-action" type="button" disabled hidden>다음</button>
+                    </div>
+                </section>
+            </div>
+
+            <section id="result-view" class="result-view case-result" hidden>
+                <div class="result-cover">
+                    <p class="case-kicker">PROFILE CLOSED</p>
+                    <h1 id="result-title"></h1>
+                    <p id="result-subtitle" class="result-subtitle"></p>
+                </div>
+
+                <div class="score-grid">
+                    <div>
+                        <span>성향 코드</span>
+                        <strong id="result-mbti"></strong>
+                    </div>
+                    <div>
+                        <span>일치율</span>
+                        <strong id="result-confidence"></strong>
+                    </div>
+                    <div>
+                        <span>출처</span>
+                        <strong id="result-season"></strong>
+                    </div>
+                </div>
+
+                <p id="result-description" class="result-description"></p>
+
+                <div id="result-tags" class="tag-list"></div>
+
+                <section class="axis-summary" aria-labelledby="axis-summary-title">
+                    <h2 id="axis-summary-title">성향 감식 결과</h2>
+                    <div id="axis-bars" class="axis-bars"></div>
+                </section>
+
+                <section class="related-results" aria-labelledby="related-title">
+                    <h2 id="related-title">추가 용의선상</h2>
+                    <div id="related-list" class="related-list"></div>
+                </section>
+
+                <div class="quiz-actions result-actions">
+                    <button id="share-button" class="primary-action" type="button">리포트 공유</button>
+                    <button id="copy-button" class="secondary-action" type="button">사건 링크 복사</button>
+                    <button id="restart-button" class="secondary-action" type="button">재수사</button>
+                </div>
+
+                <p id="share-status" class="share-status" role="status"></p>
+            </section>
+        </section>
+    </main>
+    <script src="static/character-data.js?v=20260719-static1"></script>
+    <script src="static/app.js?v=20260719-static1"></script>
+</body>
+
+</html>
