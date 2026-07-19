@@ -1,0 +1,89 @@
+name: Deploy Static Site to GitHub Pages
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate static files
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check static/app.js
+          node --check static/character-data.js
+
+      - name: Check character data
+        run: |
+          node -e "global.window = {}; require('./static/character-data.js'); const characters = window.CRIME_SCENE_CHARACTERS; if (!Array.isArray(characters) || characters.length < 1) throw new Error('Character data is empty'); console.log('characters:', characters.length);"
+
+      - name: Check required static files
+        run: |
+          test -f index.html
+          test -f test.html
+          test -f static/app.css
+          test -f static/app.js
+          test -f static/character-data.js
+
+  build:
+    name: Build Pages artifact
+    runs-on: ubuntu-latest
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare static artifact
+        run: |
+          mkdir public
+          cp index.html test.html public/
+          cp -R static public/static
+          cp season1.md season2.md season3.md public/
+          touch public/.nojekyll
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
